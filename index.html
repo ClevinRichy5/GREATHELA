@@ -1128,6 +1128,271 @@
             }
         }
 
+        /* ===== PREMIUM APPS SECTION ===== */
+        #apps {
+            background: var(--white);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #apps::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(116,198,157,0.12), transparent 70%);
+            border-radius: 50%;
+        }
+
+        #apps::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(233,196,106,0.1), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .apps-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-card {
+            background: var(--off-white);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(116,198,157,0.2);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--green-light), var(--gold));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(26,74,46,0.15);
+            background: var(--white);
+        }
+
+        .app-card:hover::before {
+            opacity: 1;
+        }
+
+        .app-card-shine {
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.6s ease;
+        }
+
+        .app-card:hover .app-card-shine {
+            left: 150%;
+        }
+
+        .app-free-badge {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: linear-gradient(135deg, var(--green-mid), var(--green-forest));
+            color: var(--white);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+        }
+
+        .app-logo-wrap {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+        }
+
+        .app-card:hover .app-logo-wrap {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .app-logo-wrap.netflix {
+            background: linear-gradient(135deg, #1a1a1a, #e50914);
+            box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
+        }
+
+        .app-logo-wrap.canva {
+            background: linear-gradient(135deg, #00c4cc, #7c2ade);
+            box-shadow: 0 8px 25px rgba(124, 42, 222, 0.3);
+        }
+
+        .app-logo-wrap.capcut {
+            background: linear-gradient(135deg, #1a1a1a, #333);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        .app-logo-wrap.chatgpt {
+            background: linear-gradient(135deg, #10a37f, #0d7a5f);
+            box-shadow: 0 8px 25px rgba(16,163,127,0.3);
+        }
+
+        .app-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .app-plan {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: var(--green-deep);
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.3rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .app-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .app-devices {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .app-device {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--green-mint);
+            color: var(--green-forest);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+        }
+
+        .apps-value-banner {
+            margin-top: 3.5rem;
+            background: linear-gradient(135deg, var(--green-deep), var(--green-forest));
+            border-radius: 24px;
+            padding: 2.5rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .apps-value-banner::after {
+            content: '🎁';
+            position: absolute;
+            right: 3rem;
+            font-size: 8rem;
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        .apps-value-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+        }
+
+        .apps-value-text p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+        }
+
+        .apps-value-price {
+            text-align: right;
+        }
+
+        .apps-value-price .old-price {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            text-decoration: line-through;
+            display: block;
+        }
+
+        .apps-value-price .new-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            display: block;
+            line-height: 1.1;
+        }
+
+        .apps-value-price .new-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--green-light);
+        }
+
+        @media (max-width: 768px) {
+            .apps-value-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+            .apps-value-price { text-align: center; }
+        }
+
         /* Progress bar on scroll */
         .progress-bar {
             position: fixed;
@@ -1165,6 +1430,7 @@
                 <li><a href="#gains">Mes Gains</a></li>
                 <li><a href="#affiliation">Affiliation</a></li>
                 <li><a href="#formations">Formations</a></li>
+                <li><a href="#apps">Apps Premium</a></li>
                 <li><a href="#contact" class="nav-cta">Commencer 🚀</a></li>
             </ul>
             <div class="hamburger" id="hamburger">
@@ -1179,6 +1445,7 @@
         <a href="#gains">Mes Gains</a>
         <a href="#affiliation">Affiliation</a>
         <a href="#formations">Formations</a>
+        <a href="#apps">Apps Premium</a>
         <a href="#contact">Commencer 🚀</a>
     </div>
 
@@ -1347,6 +1614,94 @@
         </div>
     </section>
 
+    <!-- ===== APPS PREMIUM ===== -->
+    <section id="apps">
+        <div class="container">
+            <div class="apps-header reveal">
+                <span class="section-tag">💎 Exclusivité</span>
+                <h2 class="section-title">Applications Premium<br><span class="gold">Offertes Gratuitement</span></h2>
+                <p class="section-subtitle" style="margin: 0 auto; text-align:center;">Dès ton inscription, tu reçois un accès gratuit aux meilleures applications du monde. Des outils qui valent des centaines d'euros chaque année — inclus dans ton compte !</p>
+            </div>
+
+            <div class="apps-grid">
+
+                <!-- Netflix -->
+                <div class="app-card reveal" style="transition-delay:0.1s">
+                    <div class="app-card-shine"></div>
+                    <span class="app-free-badge">✓ GRATUIT</span>
+                    <div class="app-logo-wrap netflix">🎬</div>
+                    <div class="app-name">Netflix</div>
+                    <span class="app-plan">Premium Plan</span>
+                    <p class="app-desc">Accède à tout le catalogue Netflix en qualité HD/4K — films, séries, documentaires sans limite.</p>
+                    <div class="app-devices">
+                        <span class="app-device">📱 iPhone</span>
+                        <span class="app-device">🤖 Android</span>
+                        <span class="app-device">💻 PC</span>
+                    </div>
+                </div>
+
+                <!-- Canva Pro -->
+                <div class="app-card reveal" style="transition-delay:0.2s">
+                    <div class="app-card-shine"></div>
+                    <span class="app-free-badge">✓ GRATUIT</span>
+                    <div class="app-logo-wrap canva">🎨</div>
+                    <div class="app-name">Canva Pro</div>
+                    <span class="app-plan">Pro Plan</span>
+                    <p class="app-desc">Crée des visuels professionnels, des flyers, des posts réseaux sociaux avec tous les templates premium débloqués.</p>
+                    <div class="app-devices">
+                        <span class="app-device">📱 iPhone</span>
+                        <span class="app-device">🤖 Android</span>
+                        <span class="app-device">💻 PC</span>
+                    </div>
+                </div>
+
+                <!-- CapCut Pro -->
+                <div class="app-card reveal" style="transition-delay:0.3s">
+                    <div class="app-card-shine"></div>
+                    <span class="app-free-badge">✓ GRATUIT</span>
+                    <div class="app-logo-wrap capcut">✂️</div>
+                    <div class="app-name">CapCut Pro</div>
+                    <span class="app-plan">Pro Plan</span>
+                    <p class="app-desc">Monte et édite tes vidéos TikTok & Reels comme un pro avec tous les effets, transitions et outils IA premium.</p>
+                    <div class="app-devices">
+                        <span class="app-device">📱 iPhone</span>
+                        <span class="app-device">🤖 Android</span>
+                        <span class="app-device">💻 PC</span>
+                    </div>
+                </div>
+
+                <!-- ChatGPT Pro -->
+                <div class="app-card reveal" style="transition-delay:0.4s">
+                    <div class="app-card-shine"></div>
+                    <span class="app-free-badge">✓ GRATUIT</span>
+                    <div class="app-logo-wrap chatgpt">🤖</div>
+                    <div class="app-name">ChatGPT</div>
+                    <span class="app-plan">Plus Plan</span>
+                    <p class="app-desc">Accède à GPT-4, la version la plus puissante de l'IA — génère du contenu, des textes, des stratégies marketing en secondes.</p>
+                    <div class="app-devices">
+                        <span class="app-device">📱 iPhone</span>
+                        <span class="app-device">🤖 Android</span>
+                        <span class="app-device">💻 PC</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Value Banner -->
+            <div class="apps-value-banner reveal">
+                <div class="apps-value-text">
+                    <h3>🎁 Valeur totale des apps : + 150 000 FCFA/an</h3>
+                    <p>Toutes ces applications sont incluses gratuitement avec ton inscription unique à 4 300 FCFA.</p>
+                </div>
+                <div class="apps-value-price">
+                    <span class="old-price">Valeur réelle : 150 000 FCFA</span>
+                    <span class="new-price">0 FCFA</span>
+                    <span class="new-label">Inclus gratuitement</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== INVESTISSEMENT ===== -->
     <div class="invest-section">
         <div class="invest-card reveal">
@@ -1357,6 +1712,7 @@
                 <div class="invest-feature"><span class="invest-feature-dot">✓</span> Accès à la plateforme de gains quotidiens</div>
                 <div class="invest-feature"><span class="invest-feature-dot">✓</span> Système d'affiliation 3 niveaux actif</div>
                 <div class="invest-feature"><span class="invest-feature-dot">✓</span> 12 formations digitales gratuites incluses</div>
+                <div class="invest-feature"><span class="invest-feature-dot">✓</span> 🎬 Netflix · 🎨 Canva Pro · ✂️ CapCut Pro · 🤖 ChatGPT</div>
                 <div class="invest-feature"><span class="invest-feature-dot">✓</span> Support communautaire WhatsApp</div>
                 <div class="invest-feature"><span class="invest-feature-dot">✓</span> Disponible partout en Afrique 🌍</div>
             </div>
