@@ -3,833 +3,1553 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💼 GREATHELA AGENCIES </title>
+    <title>💼 HIVEQASH AGENCIES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
+        :root {
+            --green-deep: #1a4a2e;
+            --green-forest: #2d6a4f;
+            --green-mid: #40916c;
+            --green-light: #74c69d;
+            --green-pale: #b7e4c7;
+            --green-mint: #d8f3dc;
+            --white: #ffffff;
+            --off-white: #f8fdf9;
+            --gold: #e9c46a;
+            --gold-deep: #c9a227;
+            --text-dark: #1a2e22;
+            --text-mid: #2d5a3d;
+            --text-light: #52876a;
+        }
+
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--off-white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom cursor */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--green-mid);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-trail {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--green-light);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease;
+        }
+
+        /* Particles background */
+        #particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== HEADER / NAV ===== */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 0 2rem;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background: rgba(26, 74, 46, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(26,74,46,0.3);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--green-light);
+            border-radius: 100px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-links a:hover {
+            color: var(--green-deep);
+            font-weight: 600;
+        }
+
+        .nav-cta {
+            background: var(--gold) !important;
+            color: var(--green-deep) !important;
+            font-weight: 700 !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold-deep) !important;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Mobile nav */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--green-deep);
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .mobile-menu.active a {
+            animation: menuItemIn 0.5s ease forwards;
+        }
+
+        .mobile-menu.active a:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-menu.active a:nth-child(2) { animation-delay: 0.2s; }
+        .mobile-menu.active a:nth-child(3) { animation-delay: 0.3s; }
+        .mobile-menu.active a:nth-child(4) { animation-delay: 0.4s; }
+
+        .mobile-menu a:hover { color: var(--gold); }
+
+        @keyframes menuItemIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HERO SECTION ===== */
+        #accueil {
             min-height: 100vh;
+            background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-forest) 50%, var(--green-mid) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 2rem 5rem;
+        }
+
+        .hero-bg-shapes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .hero-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            animation: heroFloat 8s ease-in-out infinite;
+        }
+
+        .hero-circle:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -150px; animation-delay: 0s; }
+        .hero-circle:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -100px; animation-delay: 3s; }
+        .hero-circle:nth-child(3) { width: 200px; height: 200px; top: 30%; left: 10%; animation-delay: 1.5s; background: rgba(116,198,157,0.08); }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero-leaves {
+            position: absolute;
+            top: 0; right: 0;
+            width: 50%;
+            height: 100%;
+            opacity: 0.06;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cellipse cx='100' cy='60' rx='40' ry='70' fill='%23fff' transform='rotate(30,100,100)'/%3E%3Cellipse cx='100' cy='60' rx='40' ry='70' fill='%23fff' transform='rotate(90,100,100)'/%3E%3Cellipse cx='100' cy='60' rx='40' ry='70' fill='%23fff' transform='rotate(150,100,100)'/%3E%3C/svg%3E") center/cover;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(233,196,106,0.2);
+            border: 1px solid rgba(233,196,106,0.5);
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            margin-bottom: 2rem;
+            animation: fadeDown 0.8s ease both;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeDown 0.8s ease 0.2s both;
+        }
+
+        .hero-title .accent {
+            color: var(--gold);
+            position: relative;
+        }
+
+        .hero-title .accent::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+            transform: scaleX(0);
+            animation: underlineIn 0.8s ease 1.2s forwards;
+        }
+
+        @keyframes underlineIn {
+            to { transform: scaleX(1); }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            animation: fadeDown 0.8s ease 0.4s both;
+        }
+
+        .hero-subtitle strong {
+            color: var(--green-pale);
+            font-weight: 700;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeDown 0.8s ease 0.6s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            color: var(--green-deep);
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 8px 30px rgba(233,196,106,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .btn-primary:hover::after { transform: translateX(100%); }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(233,196,106,0.5);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid rgba(255,255,255,0.4);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 4rem;
+            animation: fadeDown 0.8s ease 0.8s both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeDown 1s ease 1.5s both;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECTIONS LAYOUT ===== */
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
 
-        header {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid #ffd700;
+        .section-tag {
+            display: inline-block;
+            background: var(--green-mint);
+            color: var(--green-forest);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 0.4rem 1.2rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            position: relative;
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: var(--green-deep);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #ffd700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: logoGlow 3s ease-in-out infinite alternate;
+        .section-title .gold { color: var(--gold-deep); }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 600px;
         }
 
-        .nav-menu {
-            display: flex;
-            list-style: none;
+        /* Reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal-left.visible, .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ===== GAINS SECTION ===== */
+        #gains {
+            background: var(--off-white);
+        }
+
+        .gains-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .gains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+        }
+
+        .gain-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(26,74,46,0.08);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            border: 1px solid rgba(116,198,157,0.2);
+        }
+
+        .gain-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--green-mid), var(--green-light));
+            transition: height 0.4s ease;
+        }
+
+        .gain-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(26,74,46,0.15);
+        }
+
+        .gain-card:hover::before { height: 100%; }
+
+        .gain-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--green-mint);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
             transition: all 0.3s ease;
         }
 
-        .nav-menu li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+        .gain-card:hover .gain-icon {
+            background: var(--green-light);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .gain-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .gain-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--green-forest);
+            margin-bottom: 0.5rem;
+        }
+
+        .gain-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .gain-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--green-mint);
+            color: var(--green-forest);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+        }
+
+        /* ===== PROOF SECTION ===== */
+        .proof-section {
+            background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-forest) 100%);
+            padding: 6rem 2rem;
             position: relative;
             overflow: hidden;
         }
 
-        .nav-menu li a::before {
-            content: '';
+        .proof-bg {
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        .nav-menu li a:hover::before {
-            left: 100%;
-        }
-
-        .nav-menu li a:hover {
-            background: #ffd700;
-            color: #333;
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #ffd700;
-            margin: 3px 0;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
-        main {
-            margin-top: 80px;
-            padding: 2rem 0;
-        }
-
-        .hero {
+        .proof-inner {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
-            color: white;
-            margin-bottom: 3rem;
-            padding: 3rem 0;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: bounce 2s infinite;
+        .proof-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--green-light);
+            margin-bottom: 1.5rem;
         }
 
-        .hero .highlight {
-            color: #ffd700;
-            font-weight: bold;
+        .proof-amount-wrap {
+            position: relative;
+            display: inline-block;
         }
 
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
+        .proof-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 12vw, 8rem);
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+            display: block;
+            text-shadow: 0 0 60px rgba(233,196,106,0.3);
         }
 
-        .earnings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .earning-card {
-            background: linear-gradient(145deg, #ffd700, #ffed4a);
-            color: #333;
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .earning-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
-        }
-
-        .earning-card .icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .earning-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            font-weight: bold;
-        }
-
-        .earning-card .amount {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #e53e3e;
-            margin-bottom: 0.5rem;
-        }
-
-        .affiliation-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            border: 2px solid #ffd700;
-        }
-
-        .affiliation-section h2 {
-            color: #ffd700;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .levels {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .level-card {
-            background: linear-gradient(145deg, #48bb78, #38a169);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
-        }
-
-        .level-card h4 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .level-card .bonus {
+        .proof-currency {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffd700;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+            margin-top: 0.5rem;
         }
 
-        .formations-section {
-            background: rgba(0, 0, 0, 0.4);
+        .proof-sub {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .proof-sub strong {
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .proof-days {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(233,196,106,0.15);
+            border: 1px solid rgba(233,196,106,0.3);
+            color: var(--gold);
+            padding: 0.6rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* ===== AFFILIATION SECTION ===== */
+        #affiliation {
+            background: var(--white);
+        }
+
+        .aff-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .aff-visual {
+            position: relative;
+        }
+
+        .aff-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .aff-node {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--off-white);
+            border-radius: 16px;
+            border-left: 4px solid var(--green-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .aff-node:hover {
+            background: var(--green-mint);
+            border-left-color: var(--green-forest);
+            transform: translateX(8px);
+        }
+
+        .aff-connector {
+            width: 2px;
+            height: 24px;
+            background: linear-gradient(to bottom, var(--green-light), var(--green-pale));
+            margin-left: 2.8rem;
+        }
+
+        .aff-node-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--green-mint);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .aff-node-text h4 {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .aff-node-text p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .aff-bonus {
+            margin-left: auto;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--green-forest);
+            white-space: nowrap;
+        }
+
+        .aff-info {
+            background: linear-gradient(135deg, var(--green-mint), var(--off-white));
             border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            color: white;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--green-pale);
+        }
+
+        .aff-info p {
+            color: var(--green-forest);
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        .aff-info strong {
+            color: var(--green-deep);
+            font-weight: 700;
+        }
+
+        /* ===== FORMATIONS SECTION ===== */
+        #formations {
+            background: var(--off-white);
+        }
+
+        .formations-header {
+            text-align: center;
+            margin-bottom: 4rem;
         }
 
         .formations-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
         }
 
-        .formation-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            border-left: 4px solid #ffd700;
-        }
-
-        .proof-section {
-            text-align: center;
-            background: linear-gradient(145deg, #e53e3e, #c53030);
-            color: white;
-            padding: 3rem;
-            border-radius: 20px;
-            margin: 3rem 0;
-            box-shadow: 0 10px 30px rgba(229, 62, 62, 0.3);
-        }
-
-        .proof-amount {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #ffd700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: pulse 2s infinite;
-        }
-
-        .cta-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 20px;
-            margin: 3rem 0;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ffd700, #ffed4a);
-            color: #333;
-            padding: 1.5rem 3rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-            animation: bounce 2s infinite;
-            margin: 1rem;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.6);
-        }
-
-        .whatsapp-button {
-            display: inline-flex;
+        .formation-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.3rem 1.5rem;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            background: #25d366;
-            color: white;
-            padding: 1.5rem 2.5rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.2rem;
+            gap: 1rem;
+            border: 1px solid rgba(116,198,157,0.25);
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-            margin: 1rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .whatsapp-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        .formation-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--green-mint), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .price-highlight {
-            background: rgba(255, 215, 0, 0.2);
-            border: 3px solid #ffd700;
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
+        .formation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(26,74,46,0.12);
+            border-color: var(--green-light);
+        }
+
+        .formation-card:hover::after {
+            opacity: 1;
+        }
+
+        .formation-icon {
+            font-size: 1.5rem;
+            z-index: 1;
+            position: relative;
+        }
+
+        .formation-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            z-index: 1;
+            position: relative;
+        }
+
+        .formation-check {
+            margin-left: auto;
+            width: 20px;
+            height: 20px;
+            background: var(--green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            color: var(--white);
+            z-index: 1;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* ===== INVESTISSEMENT ===== */
+        .invest-section {
+            background: linear-gradient(160deg, var(--green-forest) 0%, var(--green-deep) 100%);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .invest-card {
+            max-width: 700px;
+            margin: 0 auto;
             text-align: center;
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 32px;
+            padding: 4rem 3rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .price-highlight h3 {
-            color: #ffd700;
-            font-size: 2rem;
+        .invest-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--green-light);
             margin-bottom: 1rem;
         }
 
-        .price-highlight .price {
-            font-size: 3rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        .invest-price {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 0.5rem;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-20px);
-            }
-            60% {
-                transform: translateY(-10px);
-            }
+        .invest-currency {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
+        .invest-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 2.5rem;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .invest-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
         }
 
-        @keyframes logoGlow {
-            0% {
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255, 215, 0, 0.3);
-            }
-            100% {
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255, 215, 0, 0.6);
-            }
+        .invest-feature-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            color: var(--white);
+            flex-shrink: 0;
         }
 
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        /* ===== CONTACT / CTA SECTION ===== */
+        #contact {
+            background: var(--off-white);
+            padding: 6rem 2rem;
+            text-align: center;
         }
 
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .contact-inner {
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
+        .wa-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: #25d366;
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.35);
+            margin-top: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wa-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.15);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .wa-button:hover::before { transform: translateX(100%); }
+        .wa-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 50px rgba(37,211,102,0.45);
+        }
+
+        .wa-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--green-deep);
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+        }
+
+        footer .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* ===== FLOATING WHATSAPP ===== */
+        .floating-wa {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+            z-index: 900;
+            transition: all 0.3s ease;
+            animation: waPulse 3s ease-in-out infinite;
+        }
+
+        .floating-wa:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 40px rgba(37,211,102,0.6);
+        }
+
+        @keyframes waPulse {
+            0%, 100% { box-shadow: 0 8px 25px rgba(37,211,102,0.5); }
+            50% { box-shadow: 0 8px 25px rgba(37,211,102,0.5), 0 0 0 15px rgba(37,211,102,0.1); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .aff-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
-            50% {
-                transform: translateY(-10px);
+
+            .hero-stats {
+                gap: 1.5rem;
+                flex-wrap: wrap;
             }
-        }
-
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.7;
-                transform: scale(1.1);
-            }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .sparkle {
-            animation: sparkle 2s ease-in-out infinite;
-        }
-
-        .slide-left {
-            animation: slideInLeft 1s ease-out;
-        }
-
-        .slide-right {
-            animation: slideInRight 1s ease-out;
         }
 
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
 
-            .nav-menu {
-                position: fixed;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                height: calc(100vh - 80px);
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(10px);
+            .hero-stats {
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease-in-out;
-                border-top: 2px solid #ffd700;
+                gap: 1.5rem;
             }
 
-            .nav-menu.active {
-                transform: translateX(0);
-            }
+            .stat-divider { display: none; }
 
-            .nav-menu li {
-                animation: slideInRight 0.5s ease-out forwards;
-                opacity: 0;
-            }
-
-            .nav-menu.active li:nth-child(1) {
-                animation-delay: 0.1s;
-            }
-
-            .nav-menu.active li:nth-child(2) {
-                animation-delay: 0.2s;
-            }
-
-            .nav-menu.active li:nth-child(3) {
-                animation-delay: 0.3s;
-            }
-
-            .nav-menu.active li:nth-child(4) {
-                animation-delay: 0.4s;
-            }
-
-            .nav-menu li a {
-                font-size: 1.2rem;
-                padding: 1rem 2rem;
-                border: 2px solid #ffd700;
-                border-radius: 30px;
-                background: rgba(255, 215, 0, 0.1);
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .proof-amount {
-                font-size: 2.5rem;
-            }
-            
-            .earnings-grid {
+            .gains-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .levels {
-                grid-template-columns: 1fr;
-            }
-            
-            .formations-grid {
-                grid-template-columns: 1fr 1fr;
+
+            .invest-card {
+                padding: 2.5rem 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 1.4rem;
-            }
-            
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
             .formations-grid {
                 grid-template-columns: 1fr;
             }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Progress bar on scroll */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--green-light), var(--gold));
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.1s ease;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">💼 GREATHELA AGENCIES</div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-menu" id="navMenu">
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Custom cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-trail" id="cursorTrail"></div>
+
+    <!-- Particles canvas -->
+    <canvas id="particles"></canvas>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/237651618268" class="floating-wa" target="_blank" title="WhatsApp">📩</a>
+
+    <!-- ===== HEADER ===== -->
+    <header id="header">
+        <nav>
+            <div class="logo">💼 HIVEQ<span>ASH</span></div>
+            <ul class="nav-links">
                 <li><a href="#accueil">Accueil</a></li>
                 <li><a href="#gains">Mes Gains</a></li>
                 <li><a href="#affiliation">Affiliation</a></li>
-                <li><a href="#contact">Commencer</a></li>
+                <li><a href="#formations">Formations</a></li>
+                <li><a href="#contact" class="nav-cta">Commencer 🚀</a></li>
             </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
         </nav>
     </header>
 
-    <main class="container">
-        <section id="accueil" class="hero">
-            <h1 class="floating">💼 Ce Business, est <span class="highlight sparkle">SIMPLE</span> ! 🔥</h1>
-            <p class="slide-left">Tu démarres avec <strong>3 000 FCFA</strong> une seule fois, tu bosses <strong>2h/jour</strong> depuis ton téléphone 📱</p>
-        </section>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#accueil">Accueil</a>
+        <a href="#gains">Mes Gains</a>
+        <a href="#affiliation">Affiliation</a>
+        <a href="#formations">Formations</a>
+        <a href="#contact">Commencer 🚀</a>
+    </div>
 
-        <section id="gains" class="earnings-grid">
-            <div class="earning-card floating">
-                <div class="icon sparkle">🎥</div>
-                <h3>Regarde des Vidéos</h3>
-                <div class="amount">150 - 200 FCFA</div>
-                <p>Par jour en regardant du contenu</p>
-            </div>
-
-            <div class="earning-card floating" style="animation-delay: 0.2s;">
-                <div class="icon sparkle">🧠</div>
-                <h3>Réponds aux Questions</h3>
-                <div class="amount">100 - 250 FCFA</div>
-                <p>Questions simples quotidiennes</p>
-            </div>
-
-            <div class="earning-card floating" style="animation-delay: 0.4s;">
-                <div class="icon sparkle">🎯</div>
-                <h3>Spin Game</h3>
-                <div class="amount">Jusqu'à 2 000 FCFA</div>
-                <p>Jeu quotidien avec gros gains</p>
-            </div>
-        </section>
-
-        <section class="formations-section">
-            <h2 style="color: #ffd700; text-align: center; font-size: 2.2rem; margin-bottom: 2rem;">
-                🎁 BONUS : 12 FORMATIONS DIGITALES 100% GRATUITES
-            </h2>
-            <div class="formations-grid">
-                <div class="formation-item">📊 Trading Forex</div>
-                <div class="formation-item">🛒 Vente en Ligne</div>
-                <div class="formation-item">📈 TikTok & Instagram</div>
-                <div class="formation-item">🤖 Intelligence Artificielle</div>
-                <div class="formation-item">🎬 CapCut & Canva</div>
-                <div class="formation-item">💰 Augmentez tes vues whatsapp(100-1000 vues)</div>
-                <div class="formation-item">📱 Business Communauty manager</div>
-                <div class="formation-item">🎯 Publicité Facebook</div>
-                <div class="formation-item">📧 Astuces Marketing</div>
-                <div class="formation-item">🌐 Comment lancer des campagnes publicitaires cibles</div>
-                <div class="formation-item">📊 Creer des comptes Tiktok monetiser</div>
-                <div class="formation-item">🚀 Booster des comptes Tiktok/Instragram</div>
-            </div>
-        </section>
-
-        <section id="affiliation" class="affiliation-section">
-            <h2>💥 Le VRAI Secret : l'AFFILIATION PUISSANTE</h2>
-            <p style="color: white; font-size: 1.3rem; text-align: center; margin-bottom: 2rem;">
-                🔗 Tu invites quelqu'un (peu importe son pays) → <strong style="color: #ffd700;">1 300 FCFA DIRECT</strong> dans ton compte !
-            </p>
-            
-            <div class="levels">
-                <div class="level-card">
-                    <h4>✅ Niveau 1</h4>
-                    <p>Tu invites Sarah</p>
-                    <div class="bonus">1 300 FCFA</div>
-                </div>
-                
-                <div class="level-card">
-                    <h4>✅ Niveau 2</h4>
-                    <p>Sarah invite Kevin</p>
-                    <div class="bonus">700 FCFA</div>
-                </div>
-                
-                <div class="level-card">
-                    <h4>✅ Niveau 3</h4>
-                    <p>Kevin invite Nadine</p>
-                    <div class="bonus">300 FCFA</div>
-                </div>
-            </div>
-            
-            <p style="color: #ffd700; font-size: 1.4rem; text-align: center; font-weight: bold;">
-                💡 Même si tu ne connais pas Kevin ni Nadine → TU ES PAYÉ quand même !
-            </p>
-        </section>
-
-        <section class="proof-section">
-            <h2>🌍 Disponible PARTOUT en Afrique</h2>
-            <p style="font-size: 1.3rem; margin: 1rem 0;">💸 Moi-même, je suis la preuve de 7 retraits  :</p>
-            <div class="proof-amount">2,460,000 FCFA</div>
-            <p style="font-size: 1.2rem;">en seulement <strong>20 jours</strong> (preuves à l'appui !)</p>
-        </section>
-
-        <div class="price-highlight">
-            <h3>🚀 Investissement Unique</h3>
-            <div class="price">3 000 FCFA</div>
-            <p style="color: white; font-size: 1.2rem;">Une seule fois pour créer ton compte ✅</p>
+    <!-- ===== HERO ===== -->
+    <section id="accueil">
+        <div class="hero-bg-shapes">
+            <div class="hero-circle"></div>
+            <div class="hero-circle"></div>
+            <div class="hero-circle"></div>
         </div>
+        <div class="hero-leaves"></div>
+        <div class="hero-content">
+            <div class="hero-badge">💼 Opportunité Business Africaine</div>
+            <h1 class="hero-title">Ce Business est<br><span class="accent">SIMPLE</span> & PUISSANT 🔥</h1>
+            <p class="hero-subtitle">
+                Tu démarres avec seulement <strong>4 300 FCFA</strong> une seule fois,<br>
+                tu travailles <strong>2h/jour</strong> depuis ton téléphone 📱<br>
+                et tu génères des revenus <strong>partout en Afrique</strong>.
+            </p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn-primary">Commencer maintenant →</a>
+                <a href="#gains" class="btn-outline">Voir les gains</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num">2.46M</span>
+                    <span class="stat-label">FCFA retirés</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-num">16j</span>
+                    <span class="stat-label">En seulement</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-num">4 300</span>
+                    <span class="stat-label">FCFA unique</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Découvrir</span>
+        </div>
+    </section>
 
-        <section id="contact" class="cta-section">
-            <h2 style="color: #ffd700; font-size: 2.5rem; margin-bottom: 2rem;">Tu veux commencer ?</h2>
-            <p style="color: white; font-size: 1.3rem; margin-bottom: 2rem;">
-                Tu as juste besoin de <strong>3 000 FCFA</strong> pour créer ton compte ✅
+    <!-- ===== GAINS ===== -->
+    <section id="gains" class="section">
+        <div class="container">
+            <div class="gains-header reveal">
+                <span class="section-tag">💰 Revenus</span>
+                <h2 class="section-title">Comment tu <span class="gold">gagnes</span> chaque jour</h2>
+                <p class="section-subtitle">Plusieurs sources de revenus quotidiennes, accessibles depuis ton téléphone</p>
+            </div>
+            <div class="gains-grid">
+                <div class="gain-card reveal" style="transition-delay:0.1s">
+                    <span class="gain-badge">Quotidien</span>
+                    <div class="gain-icon">🎥</div>
+                    <div class="gain-name">Regarder des Vidéos</div>
+                    <div class="gain-amount">150 – 200 FCFA</div>
+                    <div class="gain-desc">Regarde du contenu sponsorisé chaque jour et accumule tes gains facilement.</div>
+                </div>
+                <div class="gain-card reveal" style="transition-delay:0.2s">
+                    <span class="gain-badge">Quotidien</span>
+                    <div class="gain-icon">🧠</div>
+                    <div class="gain-name">Questions Simples</div>
+                    <div class="gain-amount">100 – 250 FCFA</div>
+                    <div class="gain-desc">Réponds à quelques questions simples chaque matin et encaisse directement.</div>
+                </div>
+                <div class="gain-card reveal" style="transition-delay:0.3s">
+                    <span class="gain-badge">Gros gains</span>
+                    <div class="gain-icon">🎯</div>
+                    <div class="gain-name">Spin Game</div>
+                    <div class="gain-amount">Jusqu'à 2 000 FCFA</div>
+                    <div class="gain-desc">Le jeu quotidien qui peut te rapporter de gros gains en quelques secondes.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROOF BANNER ===== -->
+    <div class="proof-section">
+        <div class="proof-bg"></div>
+        <div class="proof-inner">
+            <p class="proof-label reveal">🌍 Ma preuve de gains — 9 retraits confirmés</p>
+            <div class="proof-amount-wrap reveal">
+                <span class="proof-amount" id="proofNumber">0</span>
+                <span class="proof-currency">FCFA retirés</span>
+            </div>
+            <p class="proof-sub reveal">
+                Réalisé en <strong>seulement 16 jours</strong> — preuves à l'appui !<br>
+                Disponible partout en Afrique 🌍
             </p>
-            
-            <a href="https://wa.me/237657554642" class="whatsapp-button" target="_blank">
-                📩 Écris "GO" maintenant
-            </a>
-            
-            <p style="color: #ffd700; font-size: 1.2rem; margin-top: 2rem;">
-                et rejoins la communauté des vrais marketers ! 🚀💼
-            </p>
-        </section>
-    </main>
+            <div class="proof-days reveal">📅 16 jours de travail</div>
+        </div>
+    </div>
+
+    <!-- ===== AFFILIATION ===== -->
+    <section id="affiliation" class="section">
+        <div class="container">
+            <div class="aff-layout">
+                <div class="aff-text reveal-left">
+                    <span class="section-tag">🔗 Affiliation</span>
+                    <h2 class="section-title">Le vrai <span class="gold">secret</span> de la puissance</h2>
+                    <p class="section-subtitle">Invite quelqu'un, n'importe où en Afrique, et reçois <strong>2 100 FCFA direct</strong> dans ton compte. Mais ce n'est pas tout…</p>
+                    <div class="aff-info" style="margin-top:2rem">
+                        <p>💡 <strong>Même si tu ne connais pas les personnes</strong> parrainées par tes filleuls, tu es quand même <strong>payé automatiquement</strong> jusqu'au niveau 3 !</p>
+                    </div>
+                </div>
+                <div class="aff-visual reveal-right">
+                    <div class="aff-tree">
+                        <div class="aff-node">
+                            <div class="aff-node-icon">👤</div>
+                            <div class="aff-node-text">
+                                <h4>✅ Niveau 1 — Tu invites Sarah</h4>
+                                <p>Gain immédiat à l'inscription</p>
+                            </div>
+                            <span class="aff-bonus">2 100 FCFA</span>
+                        </div>
+                        <div class="aff-connector"></div>
+                        <div class="aff-node">
+                            <div class="aff-node-icon">👤</div>
+                            <div class="aff-node-text">
+                                <h4>✅ Niveau 2 — Sarah invite Kevin</h4>
+                                <p>Tu es payé automatiquement</p>
+                            </div>
+                            <span class="aff-bonus">850 FCFA</span>
+                        </div>
+                        <div class="aff-connector"></div>
+                        <div class="aff-node">
+                            <div class="aff-node-icon">👤</div>
+                            <div class="aff-node-text">
+                                <h4>✅ Niveau 3 — Kevin invite Nadine</h4>
+                                <p>Encore payé, sans effort</p>
+                            </div>
+                            <span class="aff-bonus">500 FCFA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FORMATIONS ===== -->
+    <section id="formations" class="section">
+        <div class="container">
+            <div class="formations-header reveal">
+                <span class="section-tag">🎁 Bonus</span>
+                <h2 class="section-title">12 Formations Digitales<br><span class="gold">100% Gratuites</span></h2>
+                <p class="section-subtitle">Incluses dans ton compte, pour développer tes compétences et multiplier tes revenus</p>
+            </div>
+            <div class="formations-grid">
+                <div class="formation-card reveal" style="transition-delay:0.05s"><span class="formation-icon">📊</span><span class="formation-name">Trading Forex</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.1s"><span class="formation-icon">🛒</span><span class="formation-name">E-commerce</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.15s"><span class="formation-icon">📈</span><span class="formation-name">TikTok & Instagram</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.2s"><span class="formation-icon">🤖</span><span class="formation-name">Intelligence Artificielle</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.25s"><span class="formation-icon">🎬</span><span class="formation-name">CapCut & Canva</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.3s"><span class="formation-icon">💬</span><span class="formation-name">Augmenter tes vues WhatsApp</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.35s"><span class="formation-icon">📱</span><span class="formation-name">Dropshipping</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.4s"><span class="formation-icon">🎯</span><span class="formation-name">Publicité Facebook</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.45s"><span class="formation-icon">🧼</span><span class="formation-name">Fabrication de Savon</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.5s"><span class="formation-icon">🌐</span><span class="formation-name">Campagnes Publicitaires</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.55s"><span class="formation-icon">📊</span><span class="formation-name">Comptes TikTok Monétisés</span><span class="formation-check">✓</span></div>
+                <div class="formation-card reveal" style="transition-delay:0.6s"><span class="formation-icon">🚀</span><span class="formation-name">Créer du Contenu</span><span class="formation-check">✓</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== INVESTISSEMENT ===== -->
+    <div class="invest-section">
+        <div class="invest-card reveal">
+            <div class="invest-label">🚀 Investissement Unique</div>
+            <div class="invest-price">4 300</div>
+            <div class="invest-currency">FCFA — une seule fois</div>
+            <div class="invest-features">
+                <div class="invest-feature"><span class="invest-feature-dot">✓</span> Accès à la plateforme de gains quotidiens</div>
+                <div class="invest-feature"><span class="invest-feature-dot">✓</span> Système d'affiliation 3 niveaux actif</div>
+                <div class="invest-feature"><span class="invest-feature-dot">✓</span> 12 formations digitales gratuites incluses</div>
+                <div class="invest-feature"><span class="invest-feature-dot">✓</span> Support communautaire WhatsApp</div>
+                <div class="invest-feature"><span class="invest-feature-dot">✓</span> Disponible partout en Afrique 🌍</div>
+            </div>
+            <a href="https://wa.me/237651618268" class="btn-primary" target="_blank">Je veux commencer →</a>
+        </div>
+    </div>
+
+    <!-- ===== CONTACT / CTA ===== -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="contact-inner reveal">
+                <span class="section-tag">📩 Contact</span>
+                <h2 class="section-title">Prêt à rejoindre la<br><span class="gold">communauté ?</span></h2>
+                <p class="section-subtitle" style="margin:0 auto">Tu n'as besoin que de <strong>4 300 FCFA</strong> pour démarrer. Écris-nous directement sur WhatsApp et rejoins les vrais marketers africains 🚀</p>
+                <a href="https://wa.me/237651618268" class="wa-button" target="_blank">
+                    <span class="wa-icon">📩</span>
+                    Écris "GO" maintenant
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <span class="footer-logo">💼 HIVEQASH AGENCIES</span>
+        <p>© 2025 Hiveqash Agencies · Disponible partout en Afrique · Business Digital</p>
+    </footer>
 
     <script>
-        // Menu hamburger pour mobile
+        // ===== CUSTOM CURSOR =====
+        const cursor = document.getElementById('cursor');
+        const trail = document.getElementById('cursorTrail');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX - 6 + 'px';
+            cursor.style.top = mouseY - 6 + 'px';
+            setTimeout(() => {
+                trail.style.left = mouseX - 16 + 'px';
+                trail.style.top = mouseY - 16 + 'px';
+            }, 80);
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                trail.style.transform = 'scale(1.5)';
+                trail.style.borderColor = 'var(--gold)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                trail.style.transform = 'scale(1)';
+                trail.style.borderColor = 'var(--green-light)';
+            });
+        });
+
+        // ===== PARTICLES =====
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        function createParticle() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 2 + 0.5,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                alpha: Math.random() * 0.3 + 0.05
+            };
+        }
+
+        for (let i = 0; i < 80; i++) particles.push(createParticle());
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(64, 145, 108, ${p.alpha})`;
+                ctx.fill();
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        // ===== HEADER SCROLL =====
+        const header = document.getElementById('header');
+        const progressBar = document.getElementById('progressBar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+
+            const total = document.body.scrollHeight - window.innerHeight;
+            progressBar.style.width = (window.scrollY / total * 100) + '%';
+        });
+
+        // ===== HAMBURGER / MOBILE MENU =====
         const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
 
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         });
 
-        // Fermer le menu quand on clique sur un lien
-        document.querySelectorAll('.nav-menu a').forEach(link => {
+        mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
             });
         });
 
-        // Fermer le menu quand on clique ailleurs
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Animation au scroll avec plus d'effets
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Ajouter des classes d'animation aléatoires
-                    const animations = ['fadeInUp', 'slideInLeft', 'slideInRight'];
-                    const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-                    entry.target.style.animation = `${randomAnimation} 0.8s ease-out forwards`;
-                    
-                    // Ajouter un effet de scintillement aux éléments importants
-                    if (entry.target.querySelector('.amount') || entry.target.querySelector('.bonus')) {
-                        entry.target.classList.add('sparkle');
-                    }
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.earning-card, .level-card, .formation-item').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scrolling amélioré
+        // ===== SMOOTH SCROLL for all nav links =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+            anchor.addEventListener('click', function(e) {
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Ajouter un effet de highlight à la section visitée
-                    target.style.transform = 'scale(1.02)';
-                    setTimeout(() => {
-                        target.style.transform = 'scale(1)';
-                    }, 300);
+                    e.preventDefault();
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
                 }
             });
         });
 
-        // Animation du montant avec effet de compteur
-        function animateNumber(element, finalNumber) {
-            let current = 0;
-            const increment = finalNumber / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= finalNumber) {
-                    current = finalNumber;
-                    clearInterval(timer);
-                    // Ajouter un effet de pulsation à la fin
-                    element.style.animation = 'pulse 0.5s ease-in-out';
-                }
-                element.textContent = Math.floor(current).toLocaleString() + ' FCFA';
-            }, 20);
-        }
+        // ===== REVEAL ON SCROLL =====
+        const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
 
-        // Observer pour le montant des preuves
-        const proofAmount = document.querySelector('.proof-amount');
-        const proofObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
-                    animateNumber(entry.target, 2460000);
-                    proofObserver.unobserve(entry.target);
+                    const delay = entry.target.style.transitionDelay || '0s';
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        });
-        proofObserver.observe(proofAmount);
+        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 
-        // Effet de parallaxe leger pour le background
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            document.body.style.backgroundPosition = `center ${rate}px`;
-        });
+        revealEls.forEach(el => revealObserver.observe(el));
 
-        // Animation des boutons CTA
-        document.querySelectorAll('.cta-button, .whatsapp-button').forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                button.style.animation = 'bounce 0.6s ease-in-out';
-            });
-            
-            button.addEventListener('mouseleave', () => {
-                button.style.animation = '';
-            });
-        });
+        // ===== PROOF COUNTER ANIMATION =====
+        const proofEl = document.getElementById('proofNumber');
+        let counted = false;
 
-        // Effet de typing pour les textes importants
-        function typeWriter(element, text, speed = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            function typing() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(typing, speed);
-                }
-            }
-            typing();
-        }
-
-        // Appliquer l'effet typing aux éléments importants quand ils deviennent visibles
-        const typingObserver = new IntersectionObserver((entries) => {
+        const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.dataset.typed) {
-                    const originalText = entry.target.textContent;
-                    typeWriter(entry.target, originalText, 50);
-                    entry.target.dataset.typed = 'true';
+                if (entry.isIntersecting && !counted) {
+                    counted = true;
+                    const target = 2460000;
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        proofEl.textContent = Math.floor(current).toLocaleString('fr-FR');
+                    }, 16);
                 }
+            });
+        }, { threshold: 0.5 });
+
+        counterObserver.observe(proofEl);
+
+        // ===== LEAF HOVER EFFECTS =====
+        document.querySelectorAll('.formation-card, .gain-card, .aff-node').forEach(el => {
+            el.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
             });
         });
 
-        // Ajouter des effets de particules au survol des cartes
-        document.querySelectorAll('.earning-card, .level-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-15px) scale(1.05)';
-                card.style.boxShadow = '0 20px 40px rgba(255, 215, 0, 0.3)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-                card.style.boxShadow = '';
-            });
-        });
+        // ===== INITIAL NAV THEME (transparent on hero) =====
+        // Already handled by .scrolled class above
     </script>
 </body>
 </html>
